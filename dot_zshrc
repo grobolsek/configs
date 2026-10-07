@@ -1,0 +1,44 @@
+# ---- Environment ----
+export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
+export EDITOR=nvim
+export LANG=en_US.UTF-8
+
+# ---- History ----
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt HIST_IGNORE_DUPS      # don't record duplicate commands
+setopt HIST_IGNORE_SPACE     # skip commands starting with a space
+setopt SHARE_HISTORY         # share history across sessions
+
+# ---- Completion ----
+autoload -Uz compinit && compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list \
+  'm:{a-zA-Z}={A-Za-z}' \
+  'r:|[._-]=* r:|=*' \
+  'l:|=* r:|=*'   # case-insensitive
+
+# ---- Options ----
+setopt AUTO_CD               # type a dir name to cd into it
+setopt CORRECT               # offer spelling corrections
+setopt INTERACTIVE_COMMENTS  # allow # comments in interactive shell
+
+# ---- Keybindings ----
+bindkey -e                               # emacs-style keybinds
+bindkey '^[[A' history-search-backward   # up arrow: prefix search
+bindkey '^[[B' history-search-forward
+bindkey '^[[1;5C' forward-word           # Ctrl+Right
+bindkey '^[[1;5D' backward-word          # Ctrl+Left
+bindkey '^H' backward-kill-word          # Ctrl+Backspace
+
+# ---- Aliases ----
+alias ls='eza --color=auto --group-directories-first --icons=auto'
+alias ll='eza -lah --color=auto --group-directories-first --icons=auto'
+alias grep='grep --color=auto'
+alias ..='cd ..'
+alias c='clear'
+alias py='python3'
+
+# ---- Prompt (Oh My Posh) ----
+eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/zen.toml)"

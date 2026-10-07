@@ -1,0 +1,17 @@
+# Ghostty add-on: zsh with fish-style history suggestions and completion
+# dropdown, plus kitty's cursor trail. Window and font are left at whatever
+# config.ghostty / Ghostty defaults give.
+#
+# Try it:        ghostty --config-file=$HOME/.config/ghostty/kitty-fish.ghostty
+# Make default:  add `config-file = kitty-fish.ghostty` to config.ghostty
+
+# --- Shell: zsh, reading ~/.config/zsh-fishlike/.zshrc (which sources ~/.zshrc first) ---
+command = /usr/bin/zsh
+env = ZDOTDIR=/home/tici/.config/zsh-fishlike
+
+# --- Colours ---
+theme = noctalia
+
+# --- Cursor trail (kitty: cursor_trail 1) ---
+custom-shader = shaders/cursor_trail.glsl
+custom-shader-animation = true

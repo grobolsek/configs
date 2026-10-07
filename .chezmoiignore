@@ -1,0 +1,3 @@
+.config/herdr/*.log
+.config/herdr/session.json
+.config/herdr/session-snapshots

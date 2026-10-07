@@ -1,0 +1,177 @@
+version = 2
+final_space = true
+console_title_template = "{{ .Shell }} in {{ .Folder }}"
+
+[[blocks]]
+  type = "prompt"
+  alignment = "left"
+  newline = true
+  overflow = "break"
+
+  [[blocks.segments]]
+    type = "session"
+    style = "plain"
+    foreground = "#888888"
+    background = "transparent"
+    template = "{{ if .SSHSession }}{{ .UserName }}@{{ .HostName }} {{ end }}"
+
+  [[blocks.segments]]
+    type = "path"
+    style = "plain"
+    background = "transparent"
+    foreground = "#5f9fd7"
+    template = "{{ .Path }}"
+    [blocks.segments.properties]
+      style = "full"
+
+  [[blocks.segments]]
+    type = "git"
+    style = "plain"
+    foreground = "#6c6c6c"
+    background = "transparent"
+    template = " {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}<yellow> *</>{{ end }}<cyan>{{ if gt .Behind 0 }} \u21e3{{ .Behind }}{{ end }}{{ if gt .Ahead 0 }} \u21e1{{ .Ahead }}{{ end }}</>"
+    [blocks.segments.properties]
+      branch_icon = ""
+      commit_icon = "@"
+      fetch_status = true
+
+[[blocks]]
+  type = "prompt"
+  alignment = "right"
+  overflow = "hidden"
+
+  [[blocks.segments]]
+    type = "node"
+    style = "plain"
+    foreground = "#8CC84B"
+    background = "transparent"
+    template = " \ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}"
+    [blocks.segments.properties]
+      fetch_package_manager = true
+      npm_icon = " <#cc3a3a>\ue5fa</> "
+      yarn_icon = " <#348cba>\ue6a7</>"
+
+  [[blocks.segments]]
+    type = "python"
+    style = "plain"
+    foreground = "#FFE873"
+    background = "transparent"
+    template = '  {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}({{ env "VIRTUAL_ENV" | base }}) {{ end }}{{ .Full }}{{ end }}'
+
+  [[blocks.segments]]
+    type = "java"
+    style = "plain"
+    foreground = "#e76f00"
+    background = "transparent"
+    template = " \ue738 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+
+  [[blocks.segments]]
+    type = "dotnet"
+    style = "plain"
+    foreground = "#8a6fdf"
+    background = "transparent"
+    template = " \ue77f {{ if .Unsupported }}{{ else }}{{ .Full }}{{ end }}"
+
+  [[blocks.segments]]
+    type = "go"
+    style = "plain"
+    foreground = "#06aad5"
+    background = "transparent"
+    template = " \ue626 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+
+  [[blocks.segments]]
+    type = "rust"
+    style = "plain"
+    foreground = "#dea584"
+    background = "transparent"
+    template = " \ue7a8 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+
+  [[blocks.segments]]
+    type = "dart"
+    style = "plain"
+    foreground = "#40c4ff"
+    background = "transparent"
+    template = " \ue798 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+
+  [[blocks.segments]]
+    type = "ruby"
+    style = "plain"
+    foreground = "#e0555b"
+    background = "transparent"
+    template = " \ue791 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+
+  [[blocks.segments]]
+    type = "aws"
+    style = "plain"
+    foreground = "#faa029"
+    background = "transparent"
+    template = " \ue7ad {{ .Profile }}{{ if .Region }}@{{ .Region }}{{ end }}"
+
+  [[blocks.segments]]
+    type = "kubectl"
+    style = "plain"
+    foreground = "#66a3ff"
+    background = "transparent"
+    template = " \uf308 {{ .Context }}{{ if .Namespace }} :: {{ .Namespace }}{{ end }}"
+
+  [[blocks.segments]]
+    type = "battery"
+    style = "plain"
+    background = "transparent"
+    foreground = "#f36943"
+    foreground_templates = [
+      "{{if eq \"Charging\" .State.String}}#b8e994{{end}}",
+      "{{if eq \"Discharging\" .State.String}}#fff34e{{end}}",
+      "{{if eq \"Full\" .State.String}}#33DD2D{{end}}"
+    ]
+    template = " {{ if not .Error }}{{ .Icon }}{{ .Percentage }}{{ end }}{{ .Error }}"
+    [blocks.segments.properties]
+      charged_icon = "\uf240 "
+      charging_icon = "\uf1e6 "
+      discharging_icon = "\ue234 "
+
+  [[blocks.segments]]
+    type = "executiontime"
+    style = "plain"
+    foreground = "#b2bec3"
+    background = "transparent"
+    template = " \ueba2 {{ .FormattedMs }}"
+    [blocks.segments.properties]
+      threshold = 1000
+
+  [[blocks.segments]]
+    type = "time"
+    style = "plain"
+    foreground = "#b2bec3"
+    background = "transparent"
+    template = " \uf017 {{ .CurrentDate | date .Format }}"
+    [blocks.segments.properties]
+      time_format = "15:04"
+
+[[blocks]]
+  type = "prompt"
+  alignment = "left"
+  newline = true
+
+  [[blocks.segments]]
+    type = "text"
+    style = "plain"
+    foreground_templates = [
+      "{{if gt .Code 0}}red{{end}}",
+      "{{if eq .Code 0}}magenta{{end}}"
+    ]
+    background = "transparent"
+    template = "❯"
+
+[transient_prompt]
+  foreground_templates = [
+    "{{if gt .Code 0}}red{{end}}",
+    "{{if eq .Code 0}}magenta{{end}}"
+  ]
+  background = "transparent"
+  template = "❯ "
+
+[secondary_prompt]
+  foreground = "magenta"
+  background = "transparent"
+  template = "❯❯ "
