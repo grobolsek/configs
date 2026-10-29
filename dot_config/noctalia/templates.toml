@@ -1,3 +1,17 @@
 [theme.templates]
 enable_builtin_templates = true
 builtin_ids = ["ghostty", "hyprland", "btop", "gtk3", "gtk4", "kcolorscheme", "kitty", "qt", "alacritty"]
+enable_community_templates = true
+community_ids = ["herdr"]
+
+# NvChad (base46) theme that follows the Noctalia palette.
+[theme.templates.user.nvchad]
+input_path = "/home/matic/.config/noctalia/templates/nvchad/noctalia.lua"
+output_path = "/home/matic/.config/nvim/lua/themes/noctalia.lua"
+post_hook = "bash /home/matic/.config/noctalia/templates/nvchad/apply.sh"
+
+# tmux statusline colors that follow the Noctalia palette.
+[theme.templates.user.tmux]
+input_path = "/home/matic/.config/noctalia/templates/tmux/colors.conf"
+output_path = "/home/matic/.config/tmux/colors.conf"
+post_hook = "bash /home/matic/.config/noctalia/templates/tmux/apply.sh"
