@@ -117,6 +117,8 @@ alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 alias c="clear"
 alias py="python3"
 
+set -Ux EDITOR nvim
+
 # tt
 tt --init fish | source
 
