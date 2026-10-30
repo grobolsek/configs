@@ -7,9 +7,15 @@ EDITOR = "gnome-text-editor --new-window"
 CALCULATOR = "gnome-calculator"
 
 -- Monitors
+{{- if eq .chezmoi.hostname "Tici-Laptop" }}
+MONITOR1 = "eDP-1"
+MONITOR2 = ""
+MONITOR3 = ""
+{{- if eq .chezmoi.hostname "Tici-PC" }}
 MONITOR1 = "DP-3"
 MONITOR2 = "HDMI-A-1"
 MONITOR3 = ""
+{{- end }}
 PRIMARY_MONITOR = MONITOR1
 
 -- Workspaces
