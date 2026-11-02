@@ -125,3 +125,6 @@ tt --init fish | source
 # zoxide + fzf
 fzf --fish | source
 zoxide init fish | source
+
+# SSH keys unlocked by gnome-keyring at login (gcr-ssh-agent)
+set -gx SSH_AUTH_SOCK $XDG_RUNTIME_DIR/gcr/ssh
