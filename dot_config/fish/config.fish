@@ -116,6 +116,7 @@ alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 # Custom alias
 alias c="clear"
 alias py="python3"
+alias img="swayimg"
 
 set -Ux EDITOR nvim
 
