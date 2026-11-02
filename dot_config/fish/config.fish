@@ -1,7 +1,7 @@
 ﻿# Format man pages
 set -x MANROFFOPT "-c"
 set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
-
+set -g fish_greeting
 # Set settings for https://github.com/franciscolourenco/done
 set -U __done_min_cmd_duration 10000
 set -U __done_notification_urgency_level low
@@ -67,11 +67,11 @@ end
 
 ## Useful aliases
 # Replace ls with eza
-alias ls='eza --color=always --group-directories-first --icons=auto' 
-alias la='eza -al --color=always --group-directories-first --icons=always'  # all files and dirs
-alias ll='eza -lah --color=always --group-directories-first --icons=always'  # long format
-alias lt='eza -aT --color=always --group-directories-first --icons=always' # tree listing
-alias l.="eza -a | grep -e '^\.'"                                     # show only dotfiles
+alias ls='eza --color=auto --group-directories-first --icons=auto'
+alias la='ls -a'
+alias ll='ls -lah'
+alias lt='ls -T'
+alias l.="eza -a | grep -e '^\.'"                                    # show only dotfiles
 
 # Common use
 alias grubup="sudo grub-mkconfig -o /boot/grub/grub.cfg"
@@ -100,7 +100,7 @@ alias update='sudo cachyos-rate-mirrors && sudo pacman -Syu'
 alias mirror="sudo cachyos-rate-mirrors"
 
 # Help people new to Arch
-abbr tb='nc termbin.com 9999'
+abbr -a tb 'nc termbin.com 9999'
 
 # Cleanup orphaned packages
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
