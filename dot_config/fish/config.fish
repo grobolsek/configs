@@ -100,9 +100,7 @@ alias update='sudo cachyos-rate-mirrors && sudo pacman -Syu'
 alias mirror="sudo cachyos-rate-mirrors"
 
 # Help people new to Arch
-alias apt='man pacman'
-alias apt-get='man pacman'
-alias tb='nc termbin.com 9999'
+abbr tb='nc termbin.com 9999'
 
 # Cleanup orphaned packages
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
@@ -117,6 +115,7 @@ alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 alias c="clear"
 alias py="python3"
 alias img="swayimg"
+alias cat="bat"
 
 set -Ux EDITOR nvim
 
