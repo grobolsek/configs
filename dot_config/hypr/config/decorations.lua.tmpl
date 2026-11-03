@@ -2,10 +2,18 @@
 
 hl.config({
     general = {
-        gaps_in = 3,
-        gaps_out = 8,
-        border_size = 2,
-        extend_border_grab_area = 10,
+        {{- if eq .chezmoi.hostname "Tici-Laptop" }}
+          gaps_in = 0,
+          gaps_out = 0,
+          border_size = 2,
+          extend_border_grab_area = 0,
+        {{- else if eq .chezmoi.hostname "Tici-PC" }}
+          gaps_in = 3,
+          gaps_out = 8,
+          border_size = 2,
+          extend_border_grab_area = 10,
+        {{- end }}
+
         resize_on_border = true,
         col = {
             active_border = {
@@ -34,6 +42,12 @@ hl.config({
     decoration = {
         dim_special = 0.3,
         rounding = 10,
+        {{- if eq .chezmoi.hostname "Tici-Laptop" }}
+          rounding = 3,
+        {{- else if eq .chezmoi.hostname "Tici-PC" }}
+          rounding = 10,
+        {{- end }}
+
         active_opacity = 0.95,
         inactive_opacity = 0.85,
         fullscreen_opacity = 1,
