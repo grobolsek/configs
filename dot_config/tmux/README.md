@@ -98,7 +98,7 @@ drag, double click (word) and triple click (line) copy right away.
 | `Enter` | switch to the highlighted session / window / pane |
 | `Tab` | mark (several) |
 | `Ctrl+x` | kill marked (or highlighted) |
-| `Alt+m` | move marked windows / panes into the highlighted session |
+| `Alt+m` | move what you marked with Tab: onto a **window**, marked panes join it; onto a **session**, they become windows there |
 | `Alt+↑` / `Alt+↓` | reorder window |
 | `Ctrl+r` | rename |
 | `Ctrl+n` | new session |

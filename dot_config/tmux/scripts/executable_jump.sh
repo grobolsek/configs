@@ -3,6 +3,7 @@
 #
 #   Enter   switch            Tab     mark (several)       Ctrl-t  tmux's own tree
 #   Ctrl-x  kill (marked)     Alt-m   move marked here     Esc     close
+#           (onto a window: marked panes join it; onto a session: they become windows)
 #   Ctrl-r  rename            Alt-↑↓  reorder window
 #   Ctrl-n  new session
 #
@@ -62,21 +63,40 @@ case $1 in
     done
     exit ;;
 
-  --move)   # $2 = highlighted row (destination session), rest = marked rows
-    CUR=$3; dest="=$(session_of "$2"):"; shift 3
-    todo=()   # "kind id source-session", resolved before anything moves
+  --move)   # $2 = highlighted row (destination), $3 = current, rest = marked rows
+    # Highlighted a session: marked windows move there, marked panes become
+    # windows there. Highlighted a window (or one of its panes): marked panes
+    # join that window, marked windows move to its session.
+    to=$2; shift 3
+    dsess=$(tmux display -p -t "$to" '#{session_id}')
+    dwin=""; [ "$(kind "$to")" = session ] || dwin=$(tmux display -p -t "$to" '#{window_id}')
+    todo=()   # "kind id source-session", resolved to ids before anything moves
     for t in "$@"; do
-      [ "$(session_of "$t")" = "$(session_of "$dest")" ] && continue
-      todo+=("$(kind "$t") $(id_of "$t") $(tmux display -p -t "$t" '#{session_id}')")
+      k=$(kind "$t"); s=$(tmux display -p -t "$t" '#{session_id}')
+      case $k in
+        session) continue ;;
+        pane) if [ -n "$dwin" ]; then
+                [ "$(tmux display -p -t "$t" '#{window_id}')" = "$dwin" ] && continue
+              else
+                [ "$s" = "$dsess" ] && continue
+              fi ;;
+        window) [ "$s" = "$dsess" ] && continue ;;
+      esac
+      todo+=("$k $(id_of "$t") $s")
     done
     for e in "${todo[@]}"; do
       read -r k id src <<<"$e"
       case $k in
-        window) tmux move-window -d -s "$id" -t "$dest" ;;
-        pane)   tmux break-pane -d -s "$id" -t "$dest" ;;
+        window) tmux move-window -d -s "$id" -t "$dsess:" ;;
+        pane) if [ -n "$dwin" ]; then tmux join-pane -d -h -s "$id" -t "$dwin"
+              else tmux break-pane -d -s "$id" -t "$dsess:"; fi ;;
       esac
       tmux move-window -r -t "$src" 2>/dev/null   # close the numbering gap
     done
+    # indexes may have shifted: find the current window and the destination again
+    CUR=$(tmux display -p -c "$(ui_client)" '#{session_name}:#{window_index}')
+    if [ -n "$dwin" ]; then dest="=$(tmux display -p -t "$dwin" '#{session_name}:#{window_index}')"
+    else dest="=$(tmux display -p -t "$dsess" '#{session_name}'):"; fi
     echo "clear-selection+reload-sync($self --list $(printf %q "$CUR"))+pos($(pos "$dest"))"
     exit ;;
 
