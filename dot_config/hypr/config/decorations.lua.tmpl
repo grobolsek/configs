@@ -43,7 +43,7 @@ hl.config({
         dim_special = 0.3,
         rounding = 10,
         {{- if eq .chezmoi.hostname "Tici-Laptop" }}
-          rounding = 3,
+          rounding = 0,
         {{- else if eq .chezmoi.hostname "Tici-PC" }}
           rounding = 10,
         {{- end }}
