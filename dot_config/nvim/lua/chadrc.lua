@@ -16,9 +16,32 @@ M.base46 = {
 
 -- M.nvdash = { load_on_startup = true }
 
+-- Click handler for the statusline diagnostics counts (called via %@...@ below).
+-- Left click: current buffer's diagnostics. Right click: whole workspace.
+_G.StDiagnosticsClick = function(_, _, button)
+  if button == "r" then
+    vim.cmd "Trouble diagnostics toggle"
+  else
+    vim.cmd "Trouble diagnostics toggle filter.buf=0"
+  end
+end
+
 M.ui = {
   cheatsheet = { theme = "simple" }, -- "simple" is more compact than "grid"
   -- tabufline = { lazyload = false },
+
+  statusline = {
+    modules = {
+      -- Same as NvChad's default diagnostics module, wrapped in a clickable region.
+      diagnostics = function()
+        local diag = require("nvchad.stl.utils").diagnostics()
+        if diag:match "^%s*$" then
+          return diag
+        end
+        return "%@v:lua.StDiagnosticsClick@" .. diag .. "%X"
+      end,
+    },
+  },
 }
 
 return M

@@ -13,6 +13,10 @@ map("n", "<leader>cs", function()
   vim.cmd("edit " .. vim.fn.stdpath "config" .. "/cheatsheet.md")
 end, { desc = "Open vim cheatsheet" })
 
+-- Diagnostics in Telescope (NvChad has no default mapping for these).
+map("n", "<leader>fd", "<cmd>Telescope diagnostics bufnr=0<cr>", { desc = "telescope diagnostics (buffer)" })
+map("n", "<leader>fD", "<cmd>Telescope diagnostics<cr>", { desc = "telescope diagnostics (workspace)" })
+
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
 -- Tmux-aware window navigation.

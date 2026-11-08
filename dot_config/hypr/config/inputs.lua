@@ -6,11 +6,11 @@ hl.config({
 		accel_profile = "flat",
 		kb_layout = "us,si", -- list every layout you want
 		kb_variant = "",
-		kb_options = "grp:alt_shift_toggle", -- Alt+Shift cycles between them
+		kb_options = "grp:caps_toggle", -- Alt+Shift cycles between them
 	},
 	-- Software cursors: hardware cursor is invisible on RX 580 with kernel 7.3 (2026-10-23)
 	cursor = {
-	    no_hardware_cursors = 1,
+		no_hardware_cursors = 1,
 	},
 })
 
