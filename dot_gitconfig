@@ -1,0 +1,14 @@
+[gpg]
+	format = ssh
+[user]
+	signingkey = /home/matic/.ssh/id_ed25519.pub
+	email = 98218852+grobolsek@users.noreply.github.com
+	name = grobolsek
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
+[gpg "ssh"]
+	allowedSignersFile = /home/matic/.ssh/allowed_signers
+[init]
+	defaultBranch = main

@@ -116,6 +116,7 @@ alias c="clear"
 alias py="python3"
 alias img="swayimg"
 alias cat="bat"
+# alias rec="wf-recorder"   # replaced by ~/.config/fish/functions/rec.fish
 
 set -Ux EDITOR nvim
 
