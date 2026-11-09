@@ -1,0 +1,12 @@
+id          = "matic/fullscreen-dot"
+name        = "Fullscreen Dot"
+version     = "1.0.0"
+plugin_api  = 3
+author      = "matic"
+icon        = "point-filled"
+description = "Shows a dot when the active workspace on this monitor has a maximized or fullscreen window (Hyprland)."
+dependencies = ["python3"]
+
+[[widget]]
+id    = "dot"
+entry = "widget.luau"
