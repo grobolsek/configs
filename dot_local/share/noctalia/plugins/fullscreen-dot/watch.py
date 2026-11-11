@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
-# Prints "<monitor>=<0|1> ..." whenever the fullscreen state of any monitor's
-# active workspace changes. 1 = it holds a maximized (Super+D) or fullscreen window.
+# Prints "<monitor>=<0|1> ..." whenever the fullscreen state of any monitor changes.
+# 1 = a workspace visible on that monitor (its active workspace, or the special
+# workspace / scratchpad opened on it) holds a maximized (Super+D) or fullscreen window.
+# Workspaces are matched by name: special workspaces have no "id" in hyprctl JSON
+# (keying on id crashed state() and froze the dot on every monitor).
 import json, os, socket, sys
 
 base = os.path.join(os.environ["XDG_RUNTIME_DIR"], "hypr", os.environ["HYPRLAND_INSTANCE_SIGNATURE"])
@@ -16,15 +19,21 @@ def query(cmd):
     return json.loads(data)
 
 def state():
-    full = {c["workspace"]["id"] for c in query("clients") if c.get("fullscreen", 0) > 0}
-    return " ".join(f'{m["name"]}={int(m["activeWorkspace"]["id"] in full)}' for m in query("monitors"))
+    full = {w.get("name") for w in query("workspaces") if w.get("hasfullscreen")}
+    full.discard(None)
+    out = []
+    for m in query("monitors"):
+        visible = {(m.get(k) or {}).get("name") for k in ("activeWorkspace", "specialWorkspace")}
+        out.append(f'{m["name"]}={int(bool(visible & full))}')
+    return " ".join(out)
 
 last = None
 def emit():
     global last
     try:
         cur = state()
-    except Exception:
+    except Exception as e:
+        print(f"fullscreen-dot: {e!r}", file=sys.stderr, flush=True)
         return
     if cur != last:
         last = cur
